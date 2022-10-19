@@ -75,7 +75,6 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'dstein64/vim-startuptime'
 Plug 'akinsho/nvim-bufferline.lua'
 Plug 'hoob3rt/lualine.nvim'
-Plug 'APZelos/blamer.nvim'
 
 "Code Snuppet"
 Plug 'SirVer/ultisnips'
@@ -246,10 +245,6 @@ require('lualine').setup({
   }
 })
 EOF
-
-"Balmer"
-let g:blamer_enabled = 1
-nnoremap <silent> <leader>tb :BlamerToggle<CR>
 
 "color lize"
 lua require'colorizer'.setup()
