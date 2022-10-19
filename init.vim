@@ -102,9 +102,6 @@ Plug 'stevearc/dressing.nvim'
 "Startify"
 Plug 'mhinz/vim-startify'
 
-"lsp language server"
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
 call plug#end()
 
 colorscheme dracula
