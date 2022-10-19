@@ -298,13 +298,16 @@ require 'lspconfig'.tsserver.setup{
 }
 EOF
 
-"Snippet"
-nnoremap ,desc :-1read $HOME/.config/snippets/describe.snip<CR>V2j=f"a
-nnoremap ,it   :-1read $HOME/.config/snippets/it.snip<CR>V2j=f";i
-nnoremap ,test :-1read $HOME/.config/snippets/test.snip<CR>V2j=f";
-
-"auto command"
-set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
-autocmd InsertEnter * set list
-autocmd VimEnter,BufEnter,InsertLeave * set nolist
-autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
+lua << EOF
+-- npm install -g diagnostic-languageserver eslint_d prettier_d_slim prettier
+local function on_attach(client)
+  print('Attached to ' .. client.name)
+end
+local dlsconfig = require 'diagnosticls-configs'
+dlsconfig.init {
+  default_config = false,
+  format = true,
+  on_attach = on_attach,
+}
+local eslint = require 'diagnosticls-configs.linters.eslint'
+local prettier = require 'diagnosticls-configs.formatters.prettier'
