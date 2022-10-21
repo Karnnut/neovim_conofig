@@ -58,6 +58,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'nvim-tree/nvim-tree.lua'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'karb94/neoscroll.nvim'
@@ -82,6 +83,9 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 "color"
 Plug 'norcalli/nvim-colorizer.lua'
+
+"term split"
+Plug 'vimlab/split-term.vim'
 
 "Telescope"
 Plug 'nvim-lua/plenary.nvim'
@@ -117,19 +121,8 @@ lua require('neoscroll').setup()
 
 "Tab Tab"
 let g:lightline={ 'enable': {'statusline': 1, 'tabline': 0} }
-au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
+nnoremap <silent>    <C-h> <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <C-l> <Cmd>BufferNext<CR>
 
 "Wilder set up"
 call wilder#setup({
@@ -141,58 +134,11 @@ call wilder#setup({
       \ })
 
 "Buffer line"
-lua << EOF
-vim.api.nvim_exec([[let $KITTY_WINDOW_ID=0]], true)
-require("bufferline").setup{
-  highlights = {
-    fill = {
-      guibg = "#282828"
-    },
-    separator_selected = {
-      guifg = "#282828"
-    },
-    separator_visible = {
-      guifg = "#282828"
-    },
-    separator = {
-      guifg = "#282828"
-    }
-  },
-  options = {
-    modified_icon = "●",
-    left_trunc_marker = "",
-    right_trunc_marker = "",
-    max_name_length = 25,
-    max_prefix_length = 25,
-    enforce_regular_tabs = false,
-    view = "multiwindow",
-    show_buffer_close_icons = true,
-    show_close_icon = false,
-    separator_style = "slant",
-    diagnostics = "nvim_lsp",
-    diagnostics_update_in_insert = false,
-    diagnostics_indicator = function(count, level, diagnostics_dict, context)
-      return "("..count..")"
-    end,
-    offsets = {
-      {
-        filetype = "coc-explorer",
-        text = "File Explorer",
-        highlight = "Directory",
-        text_align = "center"
-      }
-    }
-  }
-}
-EOF
-nnoremap <silent> gb :BufferLinePick<CR>
 
 "Dash Board"
 let g:dashboard_default_executive ='telescope'
 nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
-" nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
 nnoremap <silent> <Leader>ct :DashboardChangeColorscheme<CR>
-" nnoremap <silent> <Leader>fg :DashboardFindWord<CR>
 nnoremap <silent> <Leader>fm :DashboardJumpMark<CR>
 nnoremap <silent> <Leader>nf :DashboardNewFile<CR>
 let g:dashboard_custom_shortcut={
