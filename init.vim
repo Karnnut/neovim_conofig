@@ -79,6 +79,9 @@ Plug 'hoob3rt/lualine.nvim'
 "Code Snuppet"
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 "color"
 Plug 'norcalli/nvim-colorizer.lua'
 
@@ -87,7 +90,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 
 "Tree sitter"
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'MaxMEllon/vim-jsx-pretty' " fix indentation in jsx until treesitter can
 Plug 'jxnblk/vim-mdx-js'
@@ -101,6 +103,9 @@ Plug 'stevearc/dressing.nvim'
 
 "Startify"
 Plug 'mhinz/vim-startify'
+
+"Colorlize"
+Plug 'brenoprata10/nvim-highlight-colors'
 
 call plug#end()
 
@@ -260,43 +265,5 @@ let g:NERDToggleCheckAllLines = 1
 nnoremap <silent> <leader>c} V}:call NERDComment('x', 'toggle')<CR>
 nnoremap <silent> <leader>c{ V{:call NERDComment('x', 'toggle')<CR>
 
-"lsp language server"
 
-lua << EOF
-local util = require "lspconfig/util"
-require 'lspconfig'.tsserver.setup{
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-    end,
-    root_dir = util.root_pattern(".git", "tsconfig.json", "jsconfig.json"),
-    --[=====[ 
-    handlers = {
-      ["textDocument/publishDiagnostics"] = function(_, _, params, client_id, _, config)
-        local ignore_codes = { 80001, 7016 };
-        if params.diagnostics ~= nil then
-          local idx = 1
-          while idx <= #params.diagnostics do
-            if vim.tbl_contains(ignore_codes, params.diagnostics[idx].code) then
-              table.remove(params.diagnostics, idx)
-            else
-              idx = idx + 1
-            end 
-          end
-        end
-        vim.lsp.diagnostic.on_publish_diagnostics(_, _, params, client_id, _, config)
-      end,
-    },
-    --]=====]
-}
-EOF
 
-"Snippet"
-nnoremap ,desc :-1read $HOME/.config/snippets/describe.snip<CR>V2j=f"a
-nnoremap ,it   :-1read $HOME/.config/snippets/it.snip<CR>V2j=f";i
-nnoremap ,test :-1read $HOME/.config/snippets/test.snip<CR>V2j=f";
-
-"auto command"
-set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:↲,nbsp:␣
-autocmd InsertEnter * set list
-autocmd VimEnter,BufEnter,InsertLeave * set nolist
-autocmd BufNewFile,BufRead *.md,*.mdx,*.markdown :set filetype=markdown
