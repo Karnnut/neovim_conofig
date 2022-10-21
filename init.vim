@@ -209,3 +209,7 @@ let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <C-x> :NERDTreeToggle<CR>
+
+"Startify"
+nnoremap <silent> <C-s> <Cmd>Startify<CR>
+
