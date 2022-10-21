@@ -123,7 +123,7 @@ lua require('neoscroll').setup()
 let g:lightline={ 'enable': {'statusline': 1, 'tabline': 0} }
 nnoremap <silent>    <C-h> <Cmd>BufferPrevious<CR>
 nnoremap <silent>    <C-l> <Cmd>BufferNext<CR>
-
+nnoremap <silent>    <C-q> <Cmd>BufferClose<CR>
 "Wilder set up"
 call wilder#setup({
       \ 'modes': [':', '/', '?'],
